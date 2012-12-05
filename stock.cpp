@@ -117,47 +117,48 @@ Note: You may not engage in multiple transactions at the same time
  
 */
 
-// class Solution 
-// {
-// public:
-//     int maxProfit(vector<int> &prices) 
-//     {
-//         // Start typing your C/C++ solution below
-//         // DO NOT write int main() function
+class Solution 
+{
+public:
+    int maxProfit(vector<int> &prices) 
+    {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
 
-//         // strategy: hold until price dips
-//         if (prices.size() <= 1) return 0;
+        // strategy: hold until price dips
+        if (prices.size() <= 1) return 0;
 
-//         const size_t n = prices.size();
+        const size_t n = prices.size();
         
-//         vector<int> p1(n, 0);
-//         vector<int> hold(prices);
+        vector<int> p1(n, 0);
+        vector<int> hold(prices);
 
-//         hold[0] = prices[0];
-//         for (size_t i = 1; i < n; ++i)
-//         {
-//             hold[i] = std::min(hold[i], prices[i]);
-//             p1[i] = prices[i] - hold[i];
-//         }
+        hold[0] = prices[0];
+        for (size_t i = 1; i < n; ++i)
+        {
+            hold[i] = std::min(hold[i - 1], prices[i]);
+            p1[i] = prices[i] - hold[i];
+        }
 
-//         int p = 0;
-//         std::copy(prices.begin(), prices.end(), hold.begin()); 
-//         for (size_t i = 1; i < n; ++i)
-//         {
-//             if (prices[i-1] > prices[i])
-//             {
-//                 int p2 = 0;
-//                 hold[i] = prices[i];
-//                 for (size_t j = i+1; j < n; ++j)
-//                 {
-//                     hold[j] = std::min(hold[j-1], prices[j]);
-//                     p2 = std::max(prices[j] - hold[j], p2);
-//                 }
-                
-//             }
-//             p = std::max(p, p2 + p1[i-1]);
-//         }
-//         return p;
-//     }
-// };
+        std::copy(prices.begin(), prices.end(), hold.begin()); 
+
+        int p = std::max(p1[0], p1[1]);
+        for (size_t i = 2; i < n; ++i)
+        {
+            if (prices[i-1] > prices[i] && prices[i-1] >=  prices[i-2])
+            {
+                int p2 = 0;
+                hold[i] = prices[i];
+                for (size_t j = i+1; j < n; ++j)
+                {
+                    hold[j] = std::min(hold[j-1], prices[j]);
+                    p2 = std::max(prices[j] - hold[j], p2);
+                }
+                p = std::max(p, p2 + p1[i-1]);
+            }
+            p = std::max(p, p1[i]);
+        }
+        return p;
+    }
+};
 
