@@ -41,8 +41,8 @@ public:
         vector<size_t> counts(n, 0);
 
         // last digits
-        counts.back() = s.back() == '0' ? 0 : 1;
-        if (s.size() == 1) return counts.back();
+        counts[n - 1] = s[n - 1] == '0' ? 0 : 1;
+        if (s.size() == 1) return counts.front();
         
         // last two digits
         if (s[n - 2] == '0')
