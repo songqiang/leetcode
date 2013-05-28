@@ -1,0 +1,56 @@
+/*
+ * Song Qiang <qiang.song@usc.edu> 2013
+ */
+
+
+/*
+
+Given a collection of numbers that might contain duplicates, return all possible unique permutations.
+
+For example,
+[1,1,2] have the following unique permutations:
+[1,1,2], [1,2,1], and [2,1,1].
+
+
+*/
+
+
+class Solution {
+public:
+
+    void permute(int n, vector<int> &v, vector<vector<int> > &result)
+    {
+        if (n == v.size())
+        {
+            result.push_back(v);
+            return;
+        }
+        
+        
+        vector<int> snapshot(v.begin() + n, v.end());
+        for (size_t i = n; i < v.size(); ++i)
+            if (i == n || (v[i] != v[i-1] && v[i] != v[n])
+            {
+                swap(v[n], v[i]);
+                sort(v.begin() + n + 1, v.end()); // tricky for duplicates
+                permute(n + 1, v, result);
+                copy(snapshot.begin(), snapshot.end(), v.begin() + n);
+            }
+
+    }
+
+    vector<vector<int> > permuteUnique(vector<int> &num) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+
+        vector<vector<int> > result;
+        sort(num.begin(), num.end());
+        permute(0, num, result);
+        return result;
+    }
+
+};
+
+
+
+
