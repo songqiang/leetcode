@@ -30,7 +30,7 @@ A solution set is:
 
 class Solution {
 public:
-    vector<vector<int> > combinationSum(vector<int> &candidates, int target) {
+    vector<vector<int> > combinationSum2(vector<int> &candidates, int target) {
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
 
@@ -71,7 +71,7 @@ public:
                 r.push_back(vector<int>(i, candidates[idx]));
             else
             {
-                vector<vector<int> > t(combinationSum(candidates, couts, idx + 1,
+                vector<vector<int> > t(combinationSum(candidates, counts, idx + 1,
                                                       target_reminder));
                 for (size_t j = 0; j < t.size(); ++j)
                 {
