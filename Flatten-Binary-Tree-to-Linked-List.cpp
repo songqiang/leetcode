@@ -41,6 +41,42 @@ click to show hints.
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
+
+#include <cmath>
+#include <cassert>
+
+#include <vector>
+#include <numeric>
+#include <iostream>
+#include <algorithm>
+#include <sstream>
+#include <limits>
+#include <utility>
+#include <set>
+#include <queue>
+
+
+using namespace std;
+
+
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+
+
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+};
+
 class Solution {
 public:
     void
@@ -57,8 +93,14 @@ public:
             TreeNode* p = root->left;
             while (p->right != NULL) p = p->right;
             p->right = root->right;
-            root->right = right->left;
+            root->right = root->left;
             root->left = NULL;
         }
     }
 };
+
+int
+main(int argn, char** argv)
+{
+    Solution s;
+}
