@@ -50,7 +50,7 @@ public:
             mins[i] = std::min(mins[i-1], prices[i]);
 
         int p = prices[0] - mins[0];
-        for (size_t i = 1; i < maxs.size(); ++i)
+        for (size_t i = 1; i < mins.size(); ++i)
             p = std::max(prices[i] - mins[i], p);
         
         return p;
