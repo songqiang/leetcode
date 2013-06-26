@@ -39,44 +39,43 @@ public:
 
         if (word2.empty()) return word1.size();
         if (word1.empty()) return word2.size();
-        
-        vector<vector<int> > d(word2.size(),
-                               vector<int>(word1.size(),
-                                           numeric_limits<int>::max()));
 
-        vector<vector<int> > dexcl(word2.size(),
-                               vector<int>(word1.size(),
-                                           numeric_limits<int>::max()));
-
-        for (int i1 = 0; i1 < word1.size(); ++i1)
-        {
-            d[0][i1] = (word2[0] != word1[i1]) + i1;
-            dexcl[0][i1] = min(d[0][i1],
-                               i1 > 0 ? (1 + dexcl[0][i1 - 1]) : numeric_limits<int>::max());
-        }
+        const int MAX = numeric_limits<int>::max();
+        const int n1 = word1.size();
+        const int n2 = word2.size();
         
-        for (int i2 = 1; i2 < word2.size(); ++i2)
-            for (int i1 = 0; i1 < word1.size(); ++i1)
+        vector<vector<int> > d(n2, vector<int>(n1, MAX));
+
+        for (int i1 = 0; i1 < n1; ++i1)
+            d[0][i1] = min((word2[0] != word1[i1]) + i1,
+                           i1 > 0 ? (1 + d[0][i1 - 1]) : MAX);
+        
+        for (int i2 = 1; i2 < n2; ++i2)
+            for (int i1 = 0; i1 < n1; ++i1)
             {
-                const int mismatch = word1[i1] != word2[i2];
-                if (i1 == 0)
-                    d[i2][i1] = mismatch + i2;
-                else
-                    d[i2][i1] = mismatch + dexcl[i2 - 1][i1 - 1];
-
-                dexcl[i2][i1] = min(d[i2][i1],
-                                    min(i2 > 0 ? (1 + dexcl[i2 - 1][i1]) : numeric_limits<int>::max(),
-                                        i1 > 0 ? (1 + dexcl[i2][i1 - 1]) : numeric_limits<int>::max()));
+                const int md = (word1[i1] != word2[i2])
+                    + (i1 == 0 ? i2 : d[i2 - 1][i1 - 1]);
+                d[i2][i1] = min(md, min(i2 > 0 ? (1 + d[i2 - 1][i1]) : MAX,
+                                        i1 > 0 ? (1 + d[i2][i1 - 1]) : MAX));
             }
 
-        int best = numeric_limits<int>::max();
-        for (int i1 = 0; i1 < word1.size(); ++i1)
-            best = min(best,
-                       int(d[word2.size() - 1][i1] + word1.size() - i1 - 1));
+        int best(MAX);
+        for (int i1 = 0; i1 < n1; ++i1)
+            best = min(best, d[n2 - 1][i1] + n1 - i1 - 1);
+        for (int i2 = 0; i2 < n2; ++i2)
+            best = min(best, d[i2][n1 - 1] + n2 - i2 - 1);
 
-        for (int i2 = 0; i2 < word2.size(); ++i2)
-            best = min(best,
-                       int(d[i2][word1.size() - 1] + word2.size() - i2 - 1));
+
+        // cout << " \t";
+        // copy(word1.begin(), word1.end(), ostream_iterator<char>(cout, "\t"));
+        // cout << endl;
+        // for (int i2 = 0; i2 < n2; ++i2)
+        // {
+        //     cout << word2[i2] << "\t";
+        //     copy(d[i2].begin(), d[i2].end(), ostream_iterator<int>(cout, "\t"));
+        //     cout << endl;
+        // }
+        
         return best;
     }
 };
