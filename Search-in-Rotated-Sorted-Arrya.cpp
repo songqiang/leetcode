@@ -22,6 +22,7 @@ You may assume no duplicate exists in the array.
 #include <numeric>
 #include <iostream>
 #include <cassert>
+#include <algorithm>
 
 using namespace std;
 
@@ -92,6 +93,55 @@ public:
 
 
 };
+
+// range close open
+class MySolution {
+public:
+
+    int
+    binary_search(int A[], int h, int t, int target)
+    {
+        while (h < t)
+        {
+            const int m = (h + t - 1) / 2;
+            if (A[m] < target)
+                h = m + 1;
+            else if (A[m] > target)
+                t = m;
+            else 
+                return m;
+        }
+        return -1;
+    }
+
+    int
+    findMinIdx(int A[], int h, int t)
+    {
+        if (t == h + 1 ) return h;
+
+        int m = (h + t - 1) / 2;
+        
+        if (A[m] > A[h] && A[m] < A[t - 1])
+            return h;
+        else if (A[m] > A[h] && A[m] > A[t - 1])
+            return findMinIdx(A, m + 1, t);
+        else if (A[m] < A[h] && A[m] < A[t - 1])
+            return findMinIdx(A, h, m + 1);
+    }
+    
+    int
+    search(int A[], int n, int target) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        
+        const int h = findMinIdx(A, 0, n);
+        return target > A[n - 1]
+            ? binary_search(A, 0, h, target)
+            : binary_search(A, h, n, target);
+    }
+};
+
+
 
 int
 main(int argn, char** argv)
