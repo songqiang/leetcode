@@ -113,11 +113,8 @@ public:
 			int h = s,  t = s;
             int wn = 0;
 
-            while (t <= sl)
+            while (t < sl)
             {
-                if (wn == L.size())
-                    r.push_back(h);
-
                 if ((t - h) / wl == L.size())
                 {
                     const string hw = S.substr(h, wl);
@@ -129,7 +126,7 @@ public:
                     h += wl;
                 }
                 
-                while ((t - h) / wl < L.size() && t <= sl)
+                while ((t - h) / wl < L.size() && t < sl)
                 {
                     const string tw = S.substr(t, wl);
                     if (wc.find(tw) != wc.end())
@@ -139,6 +136,8 @@ public:
                     }
                     t += wl;
                 }
+
+                if (wn == L.size()) r.push_back(h);
             }
 		}
 
