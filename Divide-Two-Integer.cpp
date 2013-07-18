@@ -28,7 +28,7 @@ public:
         double fdividend = fabs(dividend);
         double fdivisor = fabs(divisor);
 
-        int t = static_cast<int>(exp(log(fdividend) - log(fdivisor)));           
+        int r = static_cast<int>(exp(log(fdividend) - log(fdivisor)));           
                    
         return sgn == 1 ? r : -r;
     }
