@@ -66,4 +66,49 @@ public:
         }
 
     }
+
+
+    // vector<int> 
+    // twoSum(vector<int> &numbers, int target) {
+        
+    //     int s = 0;
+    //     int t = numbers.size() - 1;
+        
+    //     vector<int> tmp(numbers);
+    //     std::sort(tmp.begin(),  tmp.end());
+    //     while (s < t)
+    //     {
+    //         const int sum = tmp[s] + tmp[t];
+    //         if (sum == target)
+    //         {
+    //             break;
+    //         }
+    //         else if (sum < target )
+    //         {
+    //             ++s;
+    //         }
+    //         else
+    //         {
+    //             --t;
+    //         }
+    //     }
+        
+        
+    //     vector<int> r;
+    //     for (int i = 0; i < numbers.size(); ++i)
+    //     {
+    //         if (numbers[i] == tmp[s]) 
+    //             r.push_back(i + 1);
+    //         else if (numbers[i] == tmp[t]) 
+    //             r.push_back(i + 1);
+    //         if (r.size() == 2) break;
+    //     }
+        
+    //     sort(r.begin(), r.end());
+
+    //     return r;
+    // }
+
+
+
 };
