@@ -35,40 +35,57 @@ using namespace std;
 
 class Solution {
 public:
+
     bool isPalindrome(int x) {
-        // Start typing your C/C++ solution below
-        // DO NOT write int main() function
-
-        if (x == 0) return true;
-        if (x < 0) return false;
-
-        const int max_n_digits = static_cast<int>(
-            floor(log(numeric_limits<int>::max()) / log(10)) + 1);
-        int n_digits = static_cast<int>(floor(log(x) / log(10)) + 1);
-
-        vector<int> exp10(min(n_digits + 1, max_n_digits), 1);
-        for (size_t i = 1; i < exp10.size(); ++i)
-            exp10[i] = 10 * exp10[i - 1];
-
-        // working with the highest digits for over-flow
-        if (max_n_digits == n_digits)
-        {
-            const int h = x / 10^(n_digits - 1);
-            const int l = x % 10;
-            if (h != l) return false;
-        }
-
-            
-        for (size_t i = (max_n_digits == n_digits); i < n_digits / 2; ++i)
-        {
-            const int h = (x % exp10[n_digits - i]) / exp10[n_digits - i  - 1];
-            const int l = (x % exp10[i + 1]) / exp10[i];
-
-            if (h != l) return false;
-        }
         
+        if (x < 0) return false;
+        if (x == 0) return true;
+        
+        const int n = static_cast<int>(floor(log(x) / log(10)) + 1);
+
+        int h = static_cast<int>(pow(10, n - 1));
+        int l = 1;
+        
+        for (int i = 0; i < n / 2; ++i)
+            if (x % (10*l) / l != (x / h) % 10)  return false;
+
         return true;
     }
+
+    // bool isPalindrome(int x) {
+    //     // Start typing your C/C++ solution below
+    //     // DO NOT write int main() function
+
+    //     if (x == 0) return true;
+    //     if (x < 0) return false;
+
+    //     const int max_n_digits = static_cast<int>(
+    //         floor(log(numeric_limits<int>::max()) / log(10)) + 1);
+    //     int n_digits = static_cast<int>(floor(log(x) / log(10)) + 1);
+
+    //     vector<int> exp10(min(n_digits + 1, max_n_digits), 1);
+    //     for (size_t i = 1; i < exp10.size(); ++i)
+    //         exp10[i] = 10 * exp10[i - 1];
+
+    //     // working with the highest digits for over-flow
+    //     if (max_n_digits == n_digits)
+    //     {
+    //         const int h = x / 10^(n_digits - 1);
+    //         const int l = x % 10;
+    //         if (h != l) return false;
+    //     }
+
+            
+    //     for (size_t i = (max_n_digits == n_digits); i < n_digits / 2; ++i)
+    //     {
+    //         const int h = (x % exp10[n_digits - i]) / exp10[n_digits - i  - 1];
+    //         const int l = (x % exp10[i + 1]) / exp10[i];
+
+    //         if (h != l) return false;
+    //     }
+        
+    //     return true;
+    // }
 };
 
 int
