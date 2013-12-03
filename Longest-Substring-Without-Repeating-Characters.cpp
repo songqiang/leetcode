@@ -28,31 +28,54 @@ using namespace std;
 class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
-        // Start typing your C/C++ solution below
-        // DO NOT write int main() function
-
-        if (s.empty()) return 0;
         
-        vector<int> start(s.size());
-
-        map<char, int> occur;
-        start[0] = 0;
-        occur[s[0]] = 0;
+        vector<int> start(s.size(), 0);
+        
         for (int i = 1; i < s.size(); ++i)
         {
-
-            start[i] =
-                max(start[i - 1],
-                    occur.find(s[i]) == occur.end() ? 0 : (occur[s[i]] + 1));
-            occur[s[i]] = i;
+            int j = i - 1;
+            while (j >= start[i - 1])
+            {
+                if (s[j] == s[i]) break;
+                --j;
+            }
+            start[i] = j + 1;
         }
         
-        int best = 1;
-        for (int i = 1; i < s.size(); ++i)
+        int best = 0;
+        for (int i = 0; i < s.size(); ++i)
             best = max(best, i - start[i] + 1);
-
+            
         return best;
+        
     }
+
+    // int lengthOfLongestSubstring(string s) {
+    //     // Start typing your C/C++ solution below
+    //     // DO NOT write int main() function
+
+    //     if (s.empty()) return 0;
+        
+    //     vector<int> start(s.size());
+
+    //     map<char, int> occur;
+    //     start[0] = 0;
+    //     occur[s[0]] = 0;
+    //     for (int i = 1; i < s.size(); ++i)
+    //     {
+
+    //         start[i] =
+    //             max(start[i - 1],
+    //                 occur.find(s[i]) == occur.end() ? 0 : (occur[s[i]] + 1));
+    //         occur[s[i]] = i;
+    //     }
+        
+    //     int best = 1;
+    //     for (int i = 1; i < s.size(); ++i)
+    //         best = max(best, i - start[i] + 1);
+
+    //     return best;
+    // }
 };
 
 
