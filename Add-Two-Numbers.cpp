@@ -29,72 +29,52 @@ public:
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
 
-        ListNode *r = NULL;
-        ListNode *t = r;
+        assert(l1 != NULL && l2 != NULL);
         
-        ListNode *p1 = l1, *p2 = l2;
+        ListNode* h = new ListNode((l1->val + l2->val) % 10);
+        int inc = (l1->val + l2->val) / 10;
         
-        size_t inc = 0;
-        while (p1 != NULL && p2 != NULL)
+        ListNode* t = h;
+        ListNode* t1 = l1->next;
+        ListNode* t2 = l2->next;
+        
+        while (t1 != NULL && t2 != NULL)
         {
-            const int s = p1->val + p2->val + inc;
-            ListNode *p = new ListNode(s % 10);
-            if (r == NULL)
-            {
-                r = p;
-                t = p;
-            }
-            else
-            {
-                t->next = p;
-                t = t->next;
-            }
-            inc = s / 10;
-
-            p1 = p1->next;
-            p2 = p2->next;
+            int q = (t1->val + t2->val + inc) % 10;
+            inc = (t1->val + t2->val + inc) / 10;
+            
+            t->next = new ListNode(q);
+            t = t->next;
+            
+            t1 = t1->next;
+            t2 = t2->next;
         }
 
-        while (p1 != NULL)
+        while (t1 != NULL)
         {
-            const int s = p1->val + inc;
-            ListNode *p = new ListNode(s % 10);
-            if (r == NULL)
-            {
-                r = p;
-                t = p;
-            }
-            else
-            {
-                t->next = p;
-                t = t->next;
-            }
-            inc = s / 10;
-
-            p1 = p1->next;
+            int q = (t1->val + inc) % 10;
+            inc = (t1->val + inc) / 10;
+            
+            t->next = new ListNode(q);
+            t = t->next;
+            
+            t1 = t1->next;
         }
 
-        while (p2 != NULL)
+        while (t2 != NULL)
         {
-            const int s = p2->val + inc;
-            ListNode *p = new ListNode(s % 10);
-            if (r == NULL)
-            {
-                r = p;
-                t = p;
-            }
-            else
-            {
-                t->next = p;
-                t = t->next;
-            }
-            inc = s / 10;
-
-            p2 = p2->next;
+            int q = (t2->val + inc) % 10;
+            inc = (t2->val + inc) / 10;
+            
+            t->next = new ListNode(q);
+            t = t->next;
+            
+            t2 = t2->next;
         }
 
-        if (inc > 0) t->next = new ListNode(inc);
+        if (inc) t->next = new ListNode(inc);
 
-        return r;
+        return h;
+
     }
 };
