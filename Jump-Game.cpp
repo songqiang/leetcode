@@ -39,6 +39,23 @@ public:
 
         return stepping_stones[0] == 0;
     }
+
+    // more intuitive
+    bool canJump_1(int A[], int n) {
+
+        if (n == 0) return false;
+        
+        vector<int> canReach(n, -1);
+        canReach[0] = A[0];
+        
+        for (int i = 1; i < n; ++i)
+            canReach[i] = canReach[i - 1] >= i ? max(canReach[i - 1], i + A[i]) : -1;
+        
+        return canReach.back() != -1;
+
+    }
+    
+
 };
 
 
