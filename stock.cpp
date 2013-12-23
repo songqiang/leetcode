@@ -42,18 +42,17 @@ public:
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
 
-        if (prices.size() == 0) return 0;
+        if (prices.size() <= 1) return 0;
+        int m = prices.front();
+        int best = 0;
         
-        vector<int> mins(prices.size(), std::numeric_limits<int>::max());
-        mins[0] = prices[0];
         for (size_t i = 1; i < prices.size(); ++i)
-            mins[i] = std::min(mins[i-1], prices[i]);
+        {
+            m = min(m, prices[i]);
+            best = max(best, prices[i] - m);
+        }
 
-        int p = prices[0] - mins[0];
-        for (size_t i = 1; i < mins.size(); ++i)
-            p = std::max(prices[i] - mins[i], p);
-        
-        return p;
+        return best;
     }
 };
 
