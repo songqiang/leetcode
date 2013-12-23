@@ -64,6 +64,44 @@ public:
             return 1 + min(ld, rd);
 
     }
+
+
+    int minDepth_wo_recursion(TreeNode *root) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+
+        if (root == NULL) return 0;
+
+        queue<size_t> d;
+        queue<TreeNode*> q;
+        q.push(root);
+        d.push(0);
+        size_t best = std::numeric_limits<size_t>::max();
+        
+        while (!q.empty())
+        {	
+            if (d.front() < best)
+            {
+                if (q.front()->left != NULL)
+                {
+                    q.push(q.front()->left);
+                    d.push(d.front() + 1);
+                }
+                if (q.front()->right != NULL)
+                {
+                    q.push(q.front()->right);
+                    d.push(d.front() + 1);
+                }
+                if (q.front()->left == NULL && q.front()->right == NULL)
+                    best = min(best, d.front() + 1);
+            }
+            q.pop();
+            d.pop();
+        } 
+
+        return best;
+    }
+
 };
 
 
