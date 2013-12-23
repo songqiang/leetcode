@@ -26,6 +26,25 @@ using namespace std;
 
 class Solution {
 public:
+
+    // alternative solution: without sorting
+    string longestCommonPrefix(vector<string> &strs) {
+        
+        if (strs.empty()) return "";
+        
+        int n = numeric_limits<int>::max();
+        for (int i = 0; i < strs.size(); ++i)
+            n = min(n, int(strs[i].size()));
+            
+        for (int k = 0; k < n; ++k)
+            for (int i = 1; i < strs.size(); ++i)
+                if (strs[i][k] != strs[0][k])
+                    return strs[0].substr(0, k);
+        
+        return strs[0].substr(0, n);
+        
+    }
+
     string longestCommonPrefix(vector<string> &strs) {
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
