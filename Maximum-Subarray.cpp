@@ -23,14 +23,26 @@ public:
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
 
-        if (n == 0) return 0;
-        vector<int> result(n);
+        int best = A[0];
+        int prev = A[0];
         
-        result[0] = A[0];
-        for (size_t i = 1; i < n; ++i)
-            result[i] = result[i - 1] > 0 ? result[i - 1] + A[i] : A[i];
+        for (int i = 1; i < n; ++i)
+        {
+            prev = max(prev, 0) + A[i];
+            best = max(best, prev);
+        }
         
-        return *max_element(result.begin(), result.end());
+        return best;
+
+
+        // if (n == 0) return 0;
+        // vector<int> result(n);
+        
+        // result[0] = A[0];
+        // for (size_t i = 1; i < n; ++i)
+        //     result[i] = result[i - 1] > 0 ? result[i - 1] + A[i] : A[i];
+        
+        // return *max_element(result.begin(), result.end());
 
     }
 };
