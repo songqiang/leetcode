@@ -75,5 +75,18 @@ public:
         return r;
     }
 
+    vector<int> searchRange_STL(int A[], int n, int target) {
+        
+        auto l = std::lower_bound(A, A + n, target);
+        auto u = std::upper_bound(A, A + n, target);
+        vector<int> r(2, -1);
+        if (l != u)
+        {
+            r.front() = l - A;
+            r.back() = u - A - 1;
+        }
+        return r;
+        
+    }
 
 };
