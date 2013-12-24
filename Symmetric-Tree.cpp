@@ -40,6 +40,8 @@ iteratively.
 #include <sstream>
 #include <limits>
 #include <utility>
+#include <queue>
+
 
 using namespace std;
 
@@ -86,6 +88,41 @@ public:
         return root == NULL || isGood(root->left, root->right);
     }
 
+
+    bool
+    isSymmetric_non_recursive(TreeNode *root) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+
+        if (root == NULL) return true;
+
+        queue<TreeNode*> l;
+        queue<TreeNode*> r;
+        l.push(root->left);
+        r.push(root->right);
+        while (!l.empty() && !r.empty())
+        {
+            if (l.front() == NULL && r.front() == NULL)
+                ;
+            else if ((l.front() == NULL && r.front() != NULL)
+                  || (l.front() != NULL && r.front() == NULL))
+                return false;
+            else if (l.front()->val != r.front()->val)
+                return false;
+            else
+            {
+                l.push(l.front()->left);
+                l.push(l.front()->right);
+                r.push(r.front()->right);
+                r.push(r.front()->left);
+            }
+            l.pop();
+            r.pop();
+        }
+
+        return  l.size() == r.size();
+    }
+
 };
 
 int
@@ -94,3 +131,5 @@ main(int argn, char** argv)
     Solution s;
 }
 
+
+// 9,-42,-42,#,76,76,#,#,13,#,13
