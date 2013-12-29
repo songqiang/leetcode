@@ -76,6 +76,15 @@ struct TreeLinkNode {
 
 class Solution {
 public:
+
+    void connect_recursion(TreeLinkNode *root) {
+        if (root == NULL || root->left == NULL) return;
+        root->left->next = root->right;
+        root->right->next = root->next == NULL ? NULL : root->next->left; 
+        connect(root->left);
+        connect(root->right);
+    }
+
     void connect(TreeLinkNode *root) {
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
