@@ -25,7 +25,23 @@ using namespace std;
 
 class Solution {
 public:
+
     int uniquePaths(int m, int n) {
+        
+        if (m == 0 || n == 0) return 0;
+        vector<vector<int> > counts(m, vector<int>(n));
+        for (int c = 0; c < n; ++c) counts[0][c] = 1;
+        for (int r = 1; r < m; ++r)
+        {
+            counts[r][0] = 1;
+            for (int c = 1; c < n; ++c)
+                counts[r][c] = counts[r-1][c] + counts[r][c-1];
+        }
+        
+        return counts.back().back();
+    }
+    
+    int uniquePaths_fill_by_diagonal(int m, int n) {
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
 

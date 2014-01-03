@@ -38,7 +38,33 @@ using namespace std;
 
 class Solution {
 public:
+
     int uniquePathsWithObstacles(vector<vector<int> > &obstacleGrid) {
+
+        int n_row  = obstacleGrid.size();
+        if (n_row == 0) return 0;
+        int n_col = obstacleGrid.front().size();
+        if (n_col == 0) return 0;
+        vector<vector<int> > counts(n_row, vector<int>(n_col, 0));
+
+        counts[0][0] = obstacleGrid[0][0] != 1;
+        for (int c = 1; c < n; ++c)
+            if (!obstacleGrid[0][c]) counts[0][c] = counts[0][c-1];
+        for (int r = 1; r < m; ++r)
+        {
+            if (!obstacleGrid[r][0])
+                counts[r][0] = counts[r-1][0];
+
+            for (int c = 1; c < n; ++c)
+                if (!obstacleGrid[r][c])
+                    counts[r][c] = counts[r-1][c] + counts[r][c-1];
+        }
+        
+        return counts.back().back();
+    }
+    
+
+    int uniquePathsWithObstacles_DIAGONAL(vector<vector<int> > &obstacleGrid) {
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
 
