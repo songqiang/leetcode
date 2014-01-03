@@ -22,7 +22,36 @@ You should return the following matrix:
 
 class Solution {
 public:
+
     vector<vector<int> > generateMatrix(int n) {
+        if (n == 0) return vector<vector<int> >();
+
+        vector<vector<int> > res(n, vector<int>(n));        
+        int step = n;
+        int c = -1, r = 0;
+        int val = 0;
+        while (val < n*n)
+        {
+            for (int i = 0; i < step; ++i)
+                res[r][++c] = ++val;
+
+            for (int i = 0; i < step - 1; ++i)
+                res[++r][c] = ++val;
+
+            for (int i = 0; i < step - 1; ++i)
+                res[r][--c] = ++val;
+
+            for (int i = 0; i < step - 2; ++i)
+                res[--r][c] = ++val;
+            
+            step -= 2;
+        }
+        
+        return res;
+        
+    }
+
+    vector<vector<int> > generateMatrix_loop_over_layer(int n) {
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
 
