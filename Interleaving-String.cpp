@@ -30,7 +30,6 @@ When s3 = "aadbbbaccc", return false.
 #include <utility>
 #include <set>
 
-
 using namespace std;
 
 // naive solution. time runout for large test data
@@ -69,33 +68,29 @@ public:
         // DO NOT write int main() function    
 
         if (s1.size() + s2.size() != s3.size()) return false;
-        if (s1.empty()) return s2 == s3;
-        if (s2.empty()) return s1 == s3;
 
-        vector<set<pair<int, int> > > pos(s3.size());
+        set<pair<int, int> > m1, m2;
 
-        if (s1[0] == s3[0]) pos[0].insert(make_pair(0, -1));
-        if (s2[0] == s3[0]) pos[0].insert(make_pair(-1, 0));
-        if (pos[0].empty()) return false;
-
-        for (size_t i = 1; i < s3.size(); ++i)
+        m1.insert(make_pair(-1, -1));
+        
+        for (size_t i = 0; i < s3.size(); ++i)
         {
-            typedef set<pair<int, int> >::iterator ItrT;
-            for (ItrT it = pos[i - 1].begin(); it !=  pos[i - 1].end(); ++it)
+            for (auto it = m1.begin(); it !=  m1.end(); ++it)
             {
-                const int p1 = it->first + 1;
-                if (p1 < s1.size() && s1[p1] == s3[i])
-                    pos[i].insert(make_pair(p1, it->second));
-
-                const int p2 = it->second + 1;
-                if (p2 < s2.size() && s2[p2] == s3[i])
-                    pos[i].insert(make_pair(it->first, p2));
+                const int i1 = it->first + 1;
+                if (i1 < s1.size() && s1[i1] == s3[i])
+                    m2.insert(make_pair(i1, it->second));
+                
+                const int i2 = it->second + 1;
+                if (i2 < s2.size() && s2[i2] == s3[i])
+                    m2.insert(make_pair(it->first, i2));
             }
 
-            pos[i - 1].clear();
-            if (pos[i].empty()) return false;
-        }
+            m1.clear();
+            m1.swap(m2);
 
+            if (m1.empty()) return false;
+        }
 
         return true;
     }
@@ -116,3 +111,38 @@ main(int argn, char** argv)
 // "babaaaabbababbbabbbbaabaabbaabbbbaabaaabaababaaaabaaabbaaabaaaabaabaabbbbbbbbbbbabaaabbababbabbabaab",
 // "babbbabbbaaabbababbbbababaabbabaabaaabbbbabbbaaabbbaaaaabbbbaabbaaabababbaaaaaabababbababaababbababbbababbbbaaaabaabbabbaaaaabbabbaaaabbbaabaaabaababaababbaaabbbbbabbbbaabbabaabbbbabaaabbababbabbabbab"
 
+/*
+
+
+
+        if (s1.empty()) return s2 == s3;
+        if (s2.empty()) return s1 == s3;
+        if (s1.size() + s2.size() != s3.size()) return false;
+
+        vector<pair<int, int> > m1, m2;
+        
+        if (s1[0] == s3[0]) m1.push_back(make_pair(0, -1));
+        if (s2[0] == s3[0]) m1.push_back(make_pair(-1, 0));
+        
+        for (int i = 1; i < s3.size(); ++i)
+        {
+            if (m1.empty()) return false;
+            for (int j = 0; j < m1.size(); ++j)
+            {
+                const int i1 = m1[j].first + 1;
+                if (i1 < s1.size() && s1[i1] == s3[i])
+                    m2.push_back(make_pair(i1, m1[j].second));
+                    
+                const int i2 = m1[j].second + 1;
+                if (i2 < s2.size() && s2[i2] == s3[i])
+                    m2.push_back(make_pair(m1[j].first, i2));
+            }
+            
+            m1.assign(m2.begin(), m2.end());
+            m2.clear();
+        }
+        
+        return !m1.empty();
+
+
+ */
