@@ -37,7 +37,45 @@ public:
         return (!(str.size() > 1 && str[0] == '0')) && i >= 0 && i <= 255;
     }
 
+
+    vector<string> getTwoFileds(const string &s)
+    {
+        const int n = s.size();
+        if (n < 2 || n > 6) return vector<string>();
+        
+        vector<string> r;
+        for (int n1 = max(1, n - 3); n1 <= min(3, n - 1); ++n1)
+        {
+            const string f1(s.substr(0, n1));
+            const string f2(s.substr(n1));
+            if (check_valid(f1) && check_valid(f2))
+                r.push_back(f1 + "." + f2);
+        }
+        return r;
+    }
+
     vector<string> restoreIpAddresses(string s) {
+
+        const int n = s.size();
+        if (n < 4 || n > 12) return vector<string>();
+        
+        vector<string> results;
+        for (int n1 = max(2, n - 6); n1 <= min(6, n - 2); ++n1)
+        {
+            const vector<string> fs1(getTwoFileds(s.substr(0, n1)));
+            if (fs1.empty()) continue;
+            const vector<string> fs2(getTwoFileds(s.substr(n1)));
+            if (fs2.empty()) continue;
+
+            for (size_t i = 0; i < fs1.size(); ++i)
+                for (size_t j = 0; j < fs2.size(); ++j)
+                    results.push_back(fs1[i] + "." + fs2[j]);
+        }
+        return results;
+    }
+    
+
+    vector<string> restoreIpAddresses_old(string s) {
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
 
