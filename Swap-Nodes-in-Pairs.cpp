@@ -49,6 +49,25 @@ public:
     };
     
     ListNode *swapPairs(ListNode *head) {
+        
+        ListNode* tmp = new ListNode(0);
+        tmp->next = head;
+        ListNode* p = tmp;
+        while (p != NULL && p->next != NULL && p->next->next != NULL)
+        {
+            ListNode* t = p->next;
+            p->next = t->next;
+            t->next = p->next->next;
+            p->next->next = t;
+            p = p->next->next;
+        } 
+        
+        head = tmp->next;
+        delete tmp;
+        return head;
+    }
+
+    ListNode *swapPairs_old(ListNode *head) {
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
 
@@ -62,7 +81,7 @@ public:
         
         // work on others
         p = head->next;
-        ListNode* q = p->next;
+        ListNode* q = p->next;  // how about p == NULL?
         while (q != NULL && q->next != NULL)
         {
             p->next = q->next;
