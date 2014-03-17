@@ -28,27 +28,27 @@ public:
         for (int layer = 0; layer < n_layer; ++layer)
         {
             // number of elements
-            int num = n - layer * 2;
+            const int num = n - layer * 2;
             
             // top left
-            int tlr = layer;
-            int tlc = layer;
+            const int tlr = layer;
+            const int tlc = layer;
             
             // top right
-            int trr = tlr;
-            int trc = tlc + num - 1;
+            const int trr = tlr;
+            const int trc = tlc + num - 1;
 
             // bottom right
-            int brr = trr + num - 1;
-            int brc = trc;
+            const int brr = trr + num - 1;
+            const int brc = trc;
             
             // bottom left
-            int blr = brr;
-            int blc = brc - (num - 1)
-
+            const int blr = brr;
+            const int blc = brc - (num - 1);
+            
             for (int i = 0; i < num - 1; ++i)
             {
-                int tmp = matrix[tlr][tlc + i];
+                const int tmp = matrix[tlr][tlc + i];
 
                 matrix[tlr][tlc + i] = matrix[blr - i][blc];
                 matrix[blr - i][blc] = matrix[brr][brc - i];
