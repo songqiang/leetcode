@@ -107,6 +107,49 @@ public:
 };
 
 
+class Solution2 {
+public:
+
+    void
+    mark_good_cell(vector<vector<char>> &b, int r, int c)
+    {
+        if (r < 0 || r >= b.size() || c < 0 || c >= b.front().size()
+            || b[r][c] != 'O')
+            return;
+            
+        b[r][c] = 'M';
+        mark_good_cell(b, r - 1, c);
+        mark_good_cell(b, r + 1, c);
+        mark_good_cell(b, r, c - 1);
+        mark_good_cell(b, r, c + 1);
+    }
+
+    void solve(vector<vector<char>> &board) {
+
+        if (board.empty() || board.front().empty()) return;
+        
+        const int nr = board.size();
+        const int nc = board.front().size();
+        
+        for (int r = 0; r < nr; ++r) 
+        {
+            mark_good_cell(board, r, 0);
+            mark_good_cell(board, r, nc - 1);
+        }
+        
+        for (int c = 0; c < nc; ++c) 
+        {
+            mark_good_cell(board, 0, c);
+            mark_good_cell(board, nr - 1, c);
+        }
+
+        for (int r = 0; r < nr; ++r)
+            for (int c = 0; c < nc; ++c)
+                board[r][c] = board[r][c] == 'M' ? '0' : 'X';
+            
+
+    }
+};
 
 int
 main(int argn, char** argv)
