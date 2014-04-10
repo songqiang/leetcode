@@ -70,6 +70,40 @@ public:
     }
 };
 
+
+class Solution2 {
+public:
+
+    void
+    get_chars(const string &digits,  const vector<string>& chars, int id, string &s, vector<string> &r ) {
+        if (id == digits.size()) {r.push_back(s); return;}
+
+        if (digits[id] == '0' || digits[id] == '1') {
+            get_chars(digits, chars, id + 1, s, r);
+            return;
+        }    
+        
+        s.push_back('-');
+        for (char c : chars[digits[id] - 48]) {
+            s.back() = c;
+            get_chars(digits, chars, id + 1, s, r);
+        }
+        s.pop_back();        
+    }
+    
+
+    vector<string> letterCombinations(string digits) {
+        
+        vector<string> chars{"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+        
+        vector<string> r;
+        string s;
+        get_chars(digits, chars, 0, s, r);
+        return r;
+    }
+};
+
+
 int
 main(int argn, char** argv)
 {

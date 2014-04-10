@@ -27,6 +27,25 @@ using namespace std;
 class Solution {
 public:
 
+    string longestCommonPrefix(vector<string> &strs) {
+        if (strs.empty()) return "";
+
+        int id = 0;
+        while (true) {
+            if (id == strs.front().size()) return strs.front().substr(0, id);
+            for (int i = 1; i < strs.size(); ++i)
+            {
+                if (id == strs[i].size() || strs[i][id] != strs.front()[id])
+                    return strs.front().substr(0, id);
+            }
+            ++id;
+        }
+        
+        
+        return "";
+    }
+
+
     // alternative solution: without sorting
     string longestCommonPrefix(vector<string> &strs) {
         

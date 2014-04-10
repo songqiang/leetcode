@@ -63,7 +63,7 @@ public:
 
         if (head == NULL || k <= 1) return head;
 
-        vector<ListNode*> ptrs(k);
+        vector<ListNode*> ptrs(k);  // not constant memory
         ListNode* h = new ListNode(0);
         h->next = head;
         ListNode* t = h;
@@ -88,6 +88,50 @@ public:
         head = h->next;
         delete h;
         return head;
+    }
+
+};
+
+
+class Solution2 {
+public:
+    ListNode *reverseKGroup(ListNode *head, int k) {
+
+        if (head == NULL || k <= 1) return head;
+        
+        ListNode* r = new ListNode(0);
+        ListNode* h = r;
+
+        while (true) {
+            ListNode* next_head = head;
+            int i = 0;
+            while (i < k && next_head != NULL) {next_head = next_head->next; ++i;}
+            
+            if (i < k) {
+                h->next = head;
+                break;
+            } else {
+                h->next = head;
+                head = head->next;
+                ListNode* next_h = h->next;
+                for (int j = 0; j < k - 1; ++j) {
+                    ListNode* tmp = head->next;
+                    head->next = h->next;
+                    h->next = head;
+                    head = tmp;
+                }
+                h = next_h;
+                head = next_head;
+            }
+        }
+        
+        h = r;
+        r = r->next;
+        delete h;
+        return r;
+        
+        
+        
     }
 };
 

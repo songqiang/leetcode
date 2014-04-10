@@ -44,10 +44,10 @@ public:
 
         for (int i = 2; i < n + 1; ++i)
         {
-            for (int j = 1; j < 2 * i; j += 2)
+            for (int j = 0; j < i; ++j)
             {
-                const int bef = (j - 1) / 2;
-                const int af = (i * 2 - j - 1) / 2;
+                const int bef = j;
+                const int af = i - j - 1;
                 for (int b = 0; b < results[bef].size(); ++b)
                     for (int a = 0; a < results[af].size(); ++a)
                         results[i].push_back("(" + results[bef][b] + ")"
@@ -66,4 +66,9 @@ int
 main(int argn, char** argv)
 {
     Solution s;
+
+
 }
+
+
+
