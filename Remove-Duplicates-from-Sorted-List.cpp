@@ -81,7 +81,28 @@ public:
     }
 };
 
+class Solution2 {
+public:
+    ListNode *deleteDuplicates(ListNode *head) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
 
+        if (head == NULL) return NULL;
+        
+        ListNode* p = head;
+        while (p->next != NULL) 
+            if (p->next->val != p->val) 
+                p = p->next;
+            else {
+                ListNode* t = p->next;
+                p->next = t->next;
+                delete t;
+            }
+
+        return head;        
+        
+    }
+};
 
 int
 main(int argn, char** argv)
